@@ -1,0 +1,32 @@
+
+
+type User {
+  ID: ID!
+	UserName: String!
+	Email: String!
+	CreditBalance: String! 
+	DisplayName: String
+	WalletAddress: String
+	CreatedAt: String
+	UpdatedAt: String
+}
+
+input NewUser {
+  UserName: String!
+	Email: String!
+	CreditBalance: String
+  DisplayName: String
+	WalletAddress: String
+}
+
+################## root query ################## 
+type Query {
+  user: User!
+  users: [User!]!
+}
+
+################## root Mutation ################## 
+
+type Mutation {
+ createUser(input: NewUser!): User!
+}

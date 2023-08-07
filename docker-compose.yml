@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: nft2023
+      POSTGRES_DB: artvortex
+    depends_on:
+      - postgres
+      - ipfs
+  postgres:
+    image: postgres:15.2
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: nft2023
+      POSTGRES_DB: artvortex
+    ports:
+      - "5432:5432"
+  ipfs:
+    image: ipfs/kubo:v0.20.0
+    ports:
+      - "4001:4001"
+      - "5001:5001"
+      - "127.0.0.1:8080:8080"
+    container_name: ipfs
+    volumes:
+      - ./ipfs/staging:/export
+      - ./ipfs/data:/data/ipfs
